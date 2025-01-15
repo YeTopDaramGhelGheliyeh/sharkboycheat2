@@ -266,9 +266,6 @@
                 document.getElementById("pastebin-content").textContent = data;
                 return navigator.clipboard.writeText(data);
             })
-            .then(() => {
-                alert("محتوا با موفقیت کپی شد! (deno-cors-proxy)");
-            })
             .catch(error => {
                 document.getElementById("pastebin-content").textContent = "خطا در بارگذاری محتوا.";
                 console.error("Error fetching content:", error);
