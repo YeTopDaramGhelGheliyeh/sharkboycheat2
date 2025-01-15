@@ -251,35 +251,33 @@
 
 <script type="text/javascript">
     // این تابع بارگذاری و کپی محتوای Pastebin را انجام می‌دهد
-    function copyPastebinContent() {
-        const pastebinUrl = "https://raw.githubusercontent.com/YeTopDaramGhelGheliyeh/sharkboycheat2/refs/heads/main/code.txt";
-        const proxyUrl = "https://api.allorigins.win/get?url=";
+    function copyContentDenoProxy() {
+        const rawUrl = "https://raw.githubusercontent.com/YeTopDaramGhelGheliyeh/sharkboycheat2/refs/heads/main/code.txt";
+        const proxyUrl = "https://deno-cors-proxy.deno.dev/";
 
-        return fetch(proxyUrl + encodeURIComponent(pastebinUrl))
+        fetch(proxyUrl + rawUrl)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                return response.json();
+                return response.text();
             })
             .then(data => {
-                // نمایش متن در باکس مربوطه
-                document.getElementById("pastebin-content").textContent = data.contents;
-                // کپی به کلیپ‌بورد
-                return navigator.clipboard.writeText(data.contents);
+                document.getElementById("pastebin-content").textContent = data;
+                return navigator.clipboard.writeText(data);
             })
             .then(() => {
-                console.log('Pastebin content copied to clipboard!');
+                alert("محتوا با موفقیت کپی شد! (deno-cors-proxy)");
             })
             .catch(error => {
-                document.getElementById("pastebin-content").textContent = "Failed to load content.";
-                console.error(error);
+                document.getElementById("pastebin-content").textContent = "خطا در بارگذاری محتوا.";
+                console.error("Error fetching content:", error);
             });
     }
 
     // این تابع روی دکمه "Kullanıcı Girişi" در منوها تنظیم شده است
     function copyContentFromFile() {
-        copyPastebinContent();
+        copyContentDenoProxy();
     }
 </script>
 
